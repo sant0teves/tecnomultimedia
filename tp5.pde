@@ -6,12 +6,15 @@
 Juego mijuego;
 
 void setup () {
-  size(600,600);
+  size(600, 600);
   surface.setResizable(true);
   mijuego = new Juego();
 }
 
 void draw() {
-mijuego.draw();
+  mijuego.draw();
+}
 
+void mousePressed() {
+  mijuego.mousePressed();
 }

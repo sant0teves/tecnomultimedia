@@ -3,11 +3,13 @@ class Pantalla {
   String ganaste; 
   String perdiste;
   String reiniciar;
+  String inicio;
   int x,y;
   int tam, tam_;
   
   //constructor
   Pantalla(){
+  inicio = "Utiliza las flechas del teclado para mover el jabón y evitar que el virus llegue al suelo\nempujando las particulas para que vuelven por donde vinieron ";
   ganaste = "¡Ganaste!";
   perdiste = "perdiste...";
   reiniciar = " click para reiniciar <";
@@ -16,6 +18,11 @@ class Pantalla {
   tam = 30;
   tam_ = 12;
   textAlign(CENTER);
+  }
+  
+  void inicio(){
+   textSize(tam_);
+   text(inicio,x,y);
   }
   
    void perdiste(){

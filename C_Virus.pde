@@ -9,7 +9,7 @@ class Virus{
   //constructor: 
   Virus(){
   x = random ( tam , width-tam);
-  y = random ( -300 , -300);
+  y = random ( -100 , -300);
   tam = random (50 , 100);
   mov = random ( 1 , 3 );
   virus_1 = loadImage("virus_1.png");
@@ -46,7 +46,7 @@ class Virus{
   
   boolean colision ( float x_, float y_, float tam_ ) {
     float distancia = dist (x , y, x_, y_);
-    if (distancia < tam/4+tam_/4){    
+    if (distancia < tam/2+tam_/2){    
     return true;
   } else {
     return false;

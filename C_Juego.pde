@@ -1,4 +1,6 @@
-class Juego{
+// el objetivo del juego es evitar que cualquier particula del virus llegue al piso, usando el jabon para colisionar y hacerlas rebotar para arriba. Si uno de los virus llega al piso el jugador pierde
+
+class Juego {
 
   //atributos
   Virus [] arreglo_Virus;
@@ -7,46 +9,47 @@ class Juego{
   Jabon mijabon;
   Pantalla pantallas;
   PImage fondo;
+  int losVirus = 0;
 
   //constructor:
-  Juego(){
-    fondo = loadImage("fondo.png");
+  Juego() {
+    fondo = loadImage("fondo.jpg");
     pantallas = new Pantalla();
     mijabon = new Jabon();
     arreglo_Virus = new Virus[c];
-    for ( int i=0; i < c ; i++ ) {
+    for ( int i=0; i < c; i++ ) {
       arreglo_Virus[i] = new Virus ();
-     }
+    }
   } 
 
   //funcionalidad:
-   void draw () {
-     image( fondo, width/2, height/2, 600, 600);
-     if ( estado == 1) { 
-         mijabon.actualizar();
-         for ( int i=0; i < c; i++ ) {
-         arreglo_Virus[i].actualizar();
-         if (arreglo_Virus[i].colision( mijabon.getX(), mijabon.getY(), mijabon.getTam() ) ) {
-         arreglo_Virus[i].volver();           
-         } else if ( arreglo_Virus[i].getY() > 600 ) {
-           estado = 2; }
-        // cambiarAEstado(2);  }
-         else if ( arreglo_Virus[0].getY() < -300 && arreglo_Virus[1].getY() < -300 && arreglo_Virus[2].getY() < -300 ) {
-        estado = 3; }
-         // cambiarAEstado(3);  }
+  void draw () {
+    image( fondo, width/2, height/2, 600, 600);
+    if ( estado == 1) { 
+      mijabon.actualizar();
+      pantallas.inicio();
+      for ( int i=0; i < c; i++ ) {
+        arreglo_Virus[i].actualizar();
+        if (arreglo_Virus[i].colision( mijabon.getX(), mijabon.getY(), mijabon.getTam() ) ) {
+          arreglo_Virus[i].volver();
+        } else if ( arreglo_Virus[i].getY() > 600 ) {
+          cambiarAEstado(2);
+        } else if ( arreglo_Virus[i].getY() < -300) {
+          losVirus++;
+        } else if ( losVirus == c ) {
+          cambiarAEstado(3);
         }
-     } else if (estado == 2) {
-     pantallas.perdiste();
-     pantallas.click();
-     } else if (estado == 3) {
-     pantallas.ganaste();
-     pantallas.click();
-     }
-   }
-   
-  // utilicé de referencia el ejemplo de clases para reiniciar el juego con mousepressed 
-  // pero no logro hacer que funcione 
-  
+      }
+    } else if (estado == 2) {
+      pantallas.perdiste();
+      pantallas.click();
+    } else if (estado == 3) {
+      pantallas.ganaste();
+      pantallas.click();
+      losVirus = 0;
+    }
+  }
+
   void mousePressed() {
     if (pantallas.click() && estado == 2) {
       cambiarAEstado(1);
@@ -55,15 +58,15 @@ class Juego{
       cambiarAEstado(1);
     }
   }
-  
+
   void cambiarAEstado( int nuevoEstado_ ) {
     estado = nuevoEstado_;
     if ( nuevoEstado_ == 1 ) {
       mijabon = new Jabon();
       arreglo_Virus = new Virus[c];
-      for ( int i=0; i < c ; i++ ) {
-      arreglo_Virus[i] = new Virus ();
+      for ( int i=0; i < c; i++ ) {
+        arreglo_Virus[i] = new Virus ();
       }
     }
-  }  
+  }
 }
